@@ -6,7 +6,9 @@ All materials related to Cosmos
 ## Install Cosmos 
 Most updated version: https://gist.github.com/bneiluj/cb41e7b095ce41546624f41c01560add
 
-Or: 
+Or use below installation steps: 
+
+Create a script: 
 
 ```
 #!/bin/bash
@@ -63,9 +65,9 @@ echo "Run 'sudo service gaiad start' to start the service."
 echo "Run 'Output log by running `journalctl -u gaiad -f`"
 ```
 
+Run script. 
 
-
-## Run
+## Start cosmos instance 
 Run `sudo systemctl start gaiad.service`
 
 ## Logs 
