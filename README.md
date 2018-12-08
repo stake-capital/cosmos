@@ -19,6 +19,14 @@ Run `sudo systemctl start gaiad.service`
 ## Logs 
 Run `journalctl -u gaiad -f`
 
+# Different chains
+
+## Game of stakes
+https://github.com/stake-capital/game-of-stakes
+
+## Gaia-900x
+
+
 # Register for Genesis 
 
 ## Genesis Collector
