@@ -18,3 +18,14 @@ Run `sudo systemctl start gaiad.service`
 
 ## Logs 
 Run `journalctl -u gaiad -f`
+
+# Register for Genesis 
+
+## Genesis Collector
+
+Genesis Collector by Certus One: https://genesis.certus.one/
+
+## Chain viewer
+
+https://hubble.figment.network/chains/genki-1000
+
