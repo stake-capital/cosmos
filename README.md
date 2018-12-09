@@ -37,3 +37,7 @@ Genesis Collector by Certus One: https://genesis.certus.one/
 
 https://hubble.figment.network/chains/genki-1000
 
+# Networks 
+
+IRISnet Testnet : Fuxi-5000 (https://medium.com/@kidinamoto/how-to-join-irisnet-testnet-fuxi-5000-77328d8219d4)
+
