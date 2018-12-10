@@ -39,5 +39,6 @@ https://hubble.figment.network/chains/genki-1000
 
 # Networks 
 
+Genki-2000: https://github.com/certusone/genki-2000
 IRISnet Testnet : Fuxi-5000 (https://medium.com/@kidinamoto/how-to-join-irisnet-testnet-fuxi-5000-77328d8219d4)
 
