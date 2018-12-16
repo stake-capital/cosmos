@@ -1,6 +1,8 @@
 echo "Enter your key password:" 
 read -s password
 
+echo "To kill this script in the future, simply run this command: kill -9 $$"
+
 while true
 do
   amount_steak=$(sudo -u gaiad /opt/go/bin/gaiacli query account cosmos1844lltc96kxkm5mq03my90se4cdssewmh77shu --chain-id=genki-3001 --trust-node=true | jq -r '.value.coins[0].amount')
