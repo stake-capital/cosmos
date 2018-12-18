@@ -36,6 +36,8 @@ Run:
 ## Game of stakes
 https://github.com/stake-capital/game-of-stakes
 
+Genesis file: https://raw.githubusercontent.com/cosmos/game-of-stakes/master/genesis.json
+
 ## Gaia-900x
 
 
