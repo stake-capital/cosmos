@@ -1,6 +1,8 @@
 echo "Enter your key password:" 
 read -s password
 
+echo "To kill this script in the future, simply run this command: kill -9 $$"
+
 while true
 do
   echo "About to withdraw rewards (for validator and delegator)"
