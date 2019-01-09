@@ -3,7 +3,8 @@ Description=Cosmos Systemd Auto Withdraw and Delegate
 After=network-online.target
 [Service]
 User=gaiad
-ExecStart=/usr/local/bin/auto-delegate.sh
+ExecStart=/bin/sh -c "KEY=$(systemd-ask-password "Enter your key password: ")"
+ExecStartPost=/usr/local/bin/auto-delegate.sh $KEY
 Restart=always
 LimitNOFILE=4096
 [Install]
