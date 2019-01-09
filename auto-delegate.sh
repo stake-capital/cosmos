@@ -10,7 +10,7 @@ do
   then
       echo "Waiting for Delegate TX to be taken..."
       towait=1
-      sleep 5m
+      sleep 10s
   else
     towait=0
     echo "Previous withdraw was successfully delegated."
