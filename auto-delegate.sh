@@ -20,11 +20,7 @@ do
     echo "About to withdraw new rewards."
     echo "${password}" | sudo /opt/go/bin/gaiacli --home=/opt/gaiacli tx dist withdraw-rewards --async --is-validator --from=game-of-stake-key-validator4 --chain-id=game_of_stakes_3 --trust-node
     amount_steak=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli query account cosmos1844lltc96kxkm5mq03my90se4cdssewmh77shu --chain-id=game_of_stakes_3 --trust-node=true | jq -r '.value.coins[0].amount')
-    if [[ $amount_steak > 10000000 ]]
-      then
-      sleep 5m
-    fi
-    if [[ $amount_steak > 0 && $amount_steak != "null" ]]; then
+    if [[ $amount_steak > 0 && $amount_steak != "null" && !($amount_steak > 10000000)]]; then
       duration=$(( SECONDS - start ))
       echo "BOOM! Previous delegation went through in $duration seconds"
       echo "About to stake ${amount_steak} stakes"
