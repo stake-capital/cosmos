@@ -1,4 +1,5 @@
 #!/bin/bash
+# Save file into /usr/local/bin/auto-delegate.sh and run /usr/local/bin/auto-delegate.sh from root
 
 echo "Enter your key password:"
 read -s password
