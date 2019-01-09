@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Enter your key password:"
 read -s password
 
