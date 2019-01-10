@@ -4,8 +4,6 @@
 echo "Enter your key password:"
 read -s password
 
-echo "To kill this script in the future, simply run this command: kill -9 $$"
-
 while true
 do
   num_unconfirmed_txs=$(curl -v --silent curl localhost:26657/num_unconfirmed_txs --stderr - | grep n_txs | cut -c15)
@@ -24,8 +22,6 @@ do
       then
         duration=$(( SECONDS - start ))
         echo "$duration seconds since last TX call"
-        #echo "Estimated gas:"
-        #echo "${password}" | sudo -u gaiad /opt/go/bin/gaiacli tx stake delegate --home=/opt/gaiacli --amount=${amount_steak}STAKE --from=game-of-stake-key-validator4 --validator=cosmosvaloper1844lltc96kxkm5mq03my90se4cdssewmj229m0 --chain-id=game_of_stakes_3  --trust-node=true --dry-run
         echo "Sending transaction to delegate ${amount_steak} stakes"
         echo "${password}" | sudo -u gaiad /opt/go/bin/gaiacli tx stake delegate --home=/opt/gaiacli --amount=${amount_steak}STAKE --from=game-of-stake-key-validator4 --validator=cosmosvaloper1844lltc96kxkm5mq03my90se4cdssewmj229m0 --chain-id=game_of_stakes_3 --fee="22STAKE" | start=$SECONDS
       else
