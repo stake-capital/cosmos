@@ -8,14 +8,12 @@ while true
 do
   num_unconfirmed_txs=$(curl -v --silent curl localhost:26657/num_unconfirmed_txs --stderr - | grep n_txs | cut -c15)
   echo "Number of unconfirmed txs: $num_unconfirmed_txs"
-  if [[ $num_unconfirmed_txs > 0 && !($towait > 0)]]
+  if [[ $num_unconfirmed_txs > 0]]
   then
       echo "There is a TX in the mempool"
       echo "..."
-      towait=1
       sleep 10s
   else
-    towait=0
     amount_steak=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli query account cosmos1844lltc96kxkm5mq03my90se4cdssewmh77shu --chain-id=game_of_stakes_3 --trust-node=true | jq -r '.value.coins[0].amount')
     echo "Number of stakes: ${amount_steak}"
     if [[ $amount_steak > 0 && $amount_steak != "null" && ($amount_steak -lt 10000000)]]
