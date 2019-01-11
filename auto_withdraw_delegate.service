@@ -2,7 +2,7 @@
 Description=Cosmos Systemd Auto Withdraw and Delegate
 After=network-online.target
 [Service]
-User=gaiad
+User=root
 ExecStart=/usr/local/bin/auto-delegate.sh
 Restart=always
 LimitNOFILE=4096
