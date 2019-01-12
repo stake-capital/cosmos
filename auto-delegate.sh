@@ -9,7 +9,7 @@ last_10_interval_earnings[0]=100
 
 remaining_stake_from_delegation_before_last=0
 
-filePath="./txn.json"
+combo_txn_file="./txn.json"
 
 while true
 do
@@ -79,7 +79,7 @@ do
     echo "About to withdraw (all STAKE) and delegate: $total_to_delegate STAKE"
 
     # Create withdrawal transaction
-    withdrawal_txn=$(sudo /opt/go/bin/gaiacli --home=/opt/gaiacli tx dist withdraw-rewards --async --is-validator --from=game-of-stake-key-validator4 --chain-id=game_of_stakes_3 --fee=1000photinos --trust-node --generate-only)
+    withdrawal_txn=$(sudo /opt/go/bin/gaiacli --home=/opt/gaiacli tx dist withdraw-rewards --is-validator --from=game-of-stake-key-validator4 --chain-id=game_of_stakes_3 --fee=1000photinos --trust-node --generate-only)
 
     # Create delegation transaction and save withdrawal message to variable
     delegation_txn=$(sudo -u gaiad /opt/go/bin/gaiacli tx stake delegate --async --home=/opt/gaiacli --amount=${total_to_delegate}STAKE --from=game-of-stake-key-validator4 --validator=cosmosvaloper1844lltc96kxkm5mq03my90se4cdssewmj229m0 --chain-id=game_of_stakes_3 --fee=1000photinos --generate-only)
@@ -88,22 +88,22 @@ do
     # Combine the delegation message with the withdrawal transaction to create the final transaction (with both messages)
     withdrawal_and_delegation_txn=$(echo $withdrawal_txn | jq ".value.msg[1] |= . + $delegation_msg")
 
-    echo "Saving generated withdrawal/delegation transaction to $filePath..."
+    echo "Saving generated withdrawal/delegation transaction to $combo_txn_file..."
 
     # Write combined transaction to file
-    echo "$withdrawal_and_delegation_txn" | sudo tee $filePath
+    echo "$withdrawal_and_delegation_txn" | sudo tee $combo_txn_file
 
     # Sign combined transaction
-    signed_txn=$(echo "${GAIA_KEY}" | sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx sign $filePath --trust-node --account-number 0 --name game-of-stake-key-validator4 --fee=1000photinos --chain-id game_of_stakes_3 --from=game-of-stake-key-validator4)
+    signed_txn=$(echo "${GAIA_KEY}" | sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx sign $combo_txn_file --trust-node --account-number 0 --name game-of-stake-key-validator4 --fee=1000photinos --chain-id game_of_stakes_3 --from=game-of-stake-key-validator4)
 
-    echo "Transaction signed! Saving signed transaction to $filePath..."
+    echo "Transaction signed! Saving signed transaction to $combo_txn_file..."
 
     # Write signed transaction to file
-    echo "$signed_txn" | sudo tee $filePath
+    echo "$signed_txn" | sudo tee $combo_txn_file
 
     # Broadcast the signed transaction
     echo "Broadcasting transaction... Result:"
-    broadcast_result=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx broadcast $filePath --account-number 0 --chain-id game_of_stakes_3 --fee=1000photinos --from=game-of-stake-key-validator4 --trust-node)
+    broadcast_result=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx broadcast $combo_txn_file --account-number 0 --chain-id game_of_stakes_3 --fee=1000photinos --from=game-of-stake-key-validator4 --trust-node)
 
     sleep 5m
   fi
