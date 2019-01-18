@@ -5,7 +5,7 @@
 #       which will generate the above file (at /etc/systemd/system/myservice.service.d/myenv.conf)
 
 echo "Setting (fake) initial historical interval stake earnings..."
-last_10_interval_earnings[0]=100
+last_10_interval_earnings[0]=260
 
 remaining_stake_from_delegation_before_last=0
 
@@ -38,23 +38,48 @@ do
     last_min_from_last_10="$(echo "${last_10_interval_earnings[@]}" | sed -e $'s/ /\\\n/g' | sort -n | head -n1)"
 
     echo "Existing (old) 10 most recent interval earnings: "
-    printf '%s, ' "${last_10_interval_earnings[@]}\n"
+    printf '%s, ' "${last_10_interval_earnings[@]}"
+    echo ""
     echo "Existing minimum value (from last 10): $last_min_from_last_10"
 
     # Check if we overshot with the last estimation
-    if [[($remaining_stake_left_from_last_delegation -gt  $last_min_from_last_10)]]
+    if [[($remaining_stake_left_from_last_delegation -ge $last_min_from_last_10)]]
+    then
+      # In this case we overshot the actual accrued STAKE since our estimate was just below the actual amount.
+      echo "Overshot (didn't effectively delegate) actual accrued STAKE for last estimation."
+      # To determine the "corrected" amount for the last delegation, we first check if the amount of stake
+      # from the delegation attempt before last is equal to the amount of stake left from our last delegation
+      # attempt (since if they're equal it means that the last transaction failed):
+      if [[($remaining_stake_from_delegation_before_last -eq $remaining_stake_left_from_last_delegation)]]
       then
-        # In this case we overshot the actual accrued STAKE since our estimate was just below the actual amount.
-        # The total amount of stake left from our last delegation attempt, minus the STAKE left over from the
-        # delegation before that, represents the "corrected" amount for this last delegation.
-        corrected_total_accrued_before_last_delegation=$((remaining_stake_left_from_last_delegation-remaining_stake_from_delegation_before_last))
-        echo "Overshot (didn't effectively delegate) actual accrued STAKE for last estimation. This is how much STAKE there was: $corrected_total_accrued_before_last_delegation"
+        # Because the last transaction failed, we have no new information about how much stake was left from the
+        # last transaction since the withdraw call didn't go through (hence why they're equal). Thus, since we do
+        # not have sufficient informaton and only know that we overshow the target, we simply correct by reducing
+        # the current minimum value by 10%:
+        corrected_total_accrued_before_last_delegation=$(echo $last_min_from_last_10*9/10 | bc)
+        echo "They were equal!"
+        echo "Corrected total = (last 10 min * 0.9)"
+      # We now check if the amount of stake from the delegation attempt before last is greater than the amount of
+      # stake left from our last delegation attempt
+      elif [[($remaining_stake_from_delegation_before_last -gt  $remaining_stake_left_from_last_delegation)]]
+      then
+          # The total amount of stake left from our last delegation attempt represents the "corrected" amount
+          # for this last delegation.
+          corrected_total_accrued_before_last_delegation=$remaining_stake_left_from_last_delegation
+          echo "Corrected total = (stake left from last delegation)"
       else
-        # In this case we had a good estimation (marginally undershot the actual amount of accrued STAKE).
-        # Now we calculate the actual, "corrected", amount from our last delegation:
-        # (Amount that should've been delegated last time) = (amount that was delegated last time) + (remaining stake in balance that wasn't delegated)
-        corrected_total_accrued_before_last_delegation=$((last_min_from_last_10+remaining_stake_left_from_last_delegation))
-        echo "Undershot actual accrued STAKE for last estimation (by $remaining_stake_left_from_last_delegation). Exact amount: $corrected_total_accrued_before_last_delegation"
+          # The total amount of stake left from our last delegation attempt, minus the STAKE left over from the
+          # delegation before that, represents the "corrected" amount for this last delegation.
+          corrected_total_accrued_before_last_delegation=$((remaining_stake_left_from_last_delegation-remaining_stake_from_delegation_before_last))
+          echo "Corrected total = (stake left from delegation before last) - (stake left from last delegation)"
+      fi
+      echo "This is how much STAKE there was: $corrected_total_accrued_before_last_delegation"
+    else
+      # In this case we had a good estimation (marginally undershot the actual amount of accrued STAKE).
+      # Now we calculate the actual, "corrected", amount from our last delegation:
+      # (Amount that should've been delegated last time) = (amount that was delegated last time) + (remaining stake in balance that wasn't delegated)
+      corrected_total_accrued_before_last_delegation=$((last_min_from_last_10+remaining_stake_left_from_last_delegation))
+      echo "Undershot actual accrued STAKE for last estimation (by $remaining_stake_left_from_last_delegation). Exact amount: $corrected_total_accrued_before_last_delegation"
     fi
 
     # Prepend the correct accrued STAKE from last time to the last 10 array
