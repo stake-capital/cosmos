@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as ActionTypes from '../redux/actionTypes';
 
@@ -14,7 +15,7 @@ const mapDispactchToProps = dispatch => {
   };
 }
 
-class ChainSize extends Component {
+export class ChainSize extends Component {
 
   componentDidMount() {
     this.props.fetchChainSize();
@@ -29,11 +30,18 @@ class ChainSize extends Component {
     }
 
     return (
-      <>
-        <p>The size of this chain is: {this.props.chainSize.chainSize} GiB</p>
-      </>
+      <p>The size of this chain is: {this.props.chainSize.chainSize} GiB</p>
     );
   }
 }
 
 export default connect(mapStateToProps, mapDispactchToProps)(ChainSize);
+
+ChainSize.protoType = {
+  chainSize: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    errMsg: PropTypes.string.isRequired,
+    chainSize: PropTypes.string.isRequired
+  }),
+  fetchChainSize: PropTypes.func.isRequired
+};

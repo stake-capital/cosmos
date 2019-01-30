@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ChainSize from './ChainSizeComponent';
 
 class Main extends Component {
@@ -14,3 +15,7 @@ class Main extends Component {
 }
 
 export default Main;
+
+Main.protoType = {
+  ChainSize: PropTypes.element
+}
