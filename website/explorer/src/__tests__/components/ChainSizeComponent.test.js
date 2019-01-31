@@ -105,12 +105,16 @@ describe('ChainSize Component - REACT+REDUX REACT-REDUX (Mount + wrapping in <Pr
   const mockStore = configureStore();
   let store, wrapper;
 
-  beforeEach(() => {
+  beforeAll(() => {
     store = mockStore(initialState);
     wrapper = mount(
       <Provider store={store}>
         <ConnectedChainSize />
       </Provider>);
+  });
+
+  beforeEach(() => {
+    store.clearActions();
   });
 
   it('renders the connected component', () => {
