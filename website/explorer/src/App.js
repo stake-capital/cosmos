@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Main from './components/MainComponent';
 import { configureStore, history } from './redux/configureStore';
 import { Provider } from 'react-redux';
@@ -23,3 +24,9 @@ class App extends Component {
 }
 
 export default App;
+
+App.propTypes = {
+  store: PropTypes.object,
+  history: PropTypes.object,
+  Main: PropTypes.element
+}
