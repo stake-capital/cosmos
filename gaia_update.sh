@@ -6,13 +6,15 @@
 go get github.com/cosmos/cosmos-sdk
 cd $HOME/go/src/github.com/cosmos/cosmos-sdk
 git fetch --all
-git checkout -f v0.28.0
+git checkout -f v0.34.6
 
-# Export GO env.
+# Export GO env
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
 # Install 
-make get_tools && make get_vendor_deps && make install
+make clean && make install
+# Check if versions are correct after install with: `$HOME/go/bin/gaiad version --long`
+#                                              and: `$HOME/go/bin/gaiacli version --long`
 sudo rm -rf /opt/go/bin/gaia*
 sudo cp $HOME/go/bin/gaia* /opt/go/bin/
