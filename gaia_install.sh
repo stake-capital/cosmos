@@ -16,13 +16,9 @@ sudo useradd -m -d /opt/gaiad --system --shell /usr/sbin/nologin gaiad
 sudo -u gaiad mkdir -p /opt/gaiad/config
 
 # Get Cosmos SDK and build binaries
-go get github.com/cosmos/cosmos-sdk
-cd $HOME/go/src/github.com/cosmos/cosmos-sdk
-git fetch --all
-git checkout -f v0.27.1
+cd ~ && git clone -b v2.0.0-rc1 https://github.com/cosmos/gaia
+cd gaia && make install
 
-make get_tools && make get_vendor_deps && make install
-cd
 # Copy the binaries to /opt/go/bin/
 sudo cp $HOME/go/bin/gaia* /opt/go/bin/
 
