@@ -1,5 +1,3 @@
-combo_txn_file="./txn.json"
-
 new_stake_to_delegate=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli query distr commission cosmosvaloper1k9a0cs97vul8w2vwknlfmpez6prv8klv03lv3d --trust-node --output json | jq -r '.[0].amount' | awk '{printf("%d\n",$1)}')
 
 remaining_from_past_delegations=$(sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli query account cosmos1k9a0cs97vul8w2vwknlfmpez6prv8klv29tea7 --chain-id=cosmoshub-2 --trust-node=true --output json | jq -r '.value.coins[0].amount')
