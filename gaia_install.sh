@@ -41,6 +41,8 @@ sudo systemctl enable gaiad.service
 # Create the config skeleton as user gaiad
 sudo -u gaiad /opt/go/bin/gaiad unsafe-reset-all --home=/opt/gaiad
 
+# ulimit 
+ulimit -n 65535
 
 echo "wget genesis.json file from https://github.com/cosmos/testnets/blob/master/gaia-9002/genesis.json"
 echo "You can copy the genesis.json file to /opt/gaiad/config and edit the /opt/gaiad/config/config.toml."
