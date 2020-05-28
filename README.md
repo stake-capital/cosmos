@@ -1,6 +1,18 @@
 # Cosmos
 All materials related to Cosmos 
 
+# Transactions
+
+## Withdraw commisions
+
+`sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx distribution withdraw-rewards cosmosvaloper1k9a0cs97vul8w2vwknlfmpez6prv8klv03lv3d --from=cosmos1k9a0cs97vul8w2vwknlfmpez6prv8klv29tea7 --chain-id=cosmoshub-3 --trust-node --gas=200000 --commission`
+
+## Send funds
+
+`sudo -u gaiad /opt/go/bin/gaiacli tx send cosmos1k9a0cs97vul8w2vwknlfmpez6prv8klv29tea7 cosmos15v50ymp6n5dn73erkqtmq0u8adpl8d3ujv2e74 100000000uatom --chain-id=cosmoshub-3 --trust-node=true --home=/opt/gaiacli --memo "100560223"`
+
+Binance: `100560223`
+
 # Installation 
 
 ## Install Cosmos 
