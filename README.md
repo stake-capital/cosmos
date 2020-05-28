@@ -5,7 +5,7 @@ All materials related to Cosmos
 
 ## Check generated commisssions
 
-https://cosmos.bigdipper.live/transactions/849D909DEB6E14F4EBF34CFAC894805972AD99E3BBDB57FE5B74FBC2E7729832
+https://cosmos.bigdipper.live/account/cosmos1k9a0cs97vul8w2vwknlfmpez6prv8klv29tea7
 
 ## Withdraw commisions
 
