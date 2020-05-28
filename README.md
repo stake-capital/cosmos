@@ -3,6 +3,10 @@ All materials related to Cosmos
 
 # Transactions
 
+## Check generated commisssions
+
+https://cosmos.bigdipper.live/transactions/849D909DEB6E14F4EBF34CFAC894805972AD99E3BBDB57FE5B74FBC2E7729832
+
 ## Withdraw commisions
 
 `sudo -u gaiad /opt/go/bin/gaiacli --home=/opt/gaiacli tx distribution withdraw-rewards cosmosvaloper1k9a0cs97vul8w2vwknlfmpez6prv8klv03lv3d --from=cosmos1k9a0cs97vul8w2vwknlfmpez6prv8klv29tea7 --chain-id=cosmoshub-3 --trust-node --gas=200000 --commission`
