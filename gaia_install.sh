@@ -3,6 +3,8 @@
 # Upgrade the system and install go
 sudo apt update
 sudo apt upgrade -y
+# Install essential
+sudo apt install build-essential
 sudo apt install gcc git make -y
 sudo snap install --classic go
 sudo mkdir -p /opt/go/bin
